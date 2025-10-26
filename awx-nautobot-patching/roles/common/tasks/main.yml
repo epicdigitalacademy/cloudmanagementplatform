@@ -1,0 +1,5 @@
+---
+- name: Gather OS info
+  setup:
+    gather_subset:
+      - "min"

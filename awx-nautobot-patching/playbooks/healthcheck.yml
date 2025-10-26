@@ -1,0 +1,25 @@
+---
+- name: Post-patch health check
+  hosts: all
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - name: Check system uptime
+      command: uptime
+      register: uptime_result
+
+    - name: Check free memory
+      command: free -m
+      register: mem_result
+
+    - name: Check disk usage
+      command: df -h /
+      register: disk_result
+
+    - name: Display health summary
+      debug:
+        msg:
+          - "Uptime: {{ uptime_result.stdout }}"
+          - "Memory: {{ mem_result.stdout }}"
+          - "Disk: {{ disk_result.stdout }}"
